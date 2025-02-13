@@ -7,21 +7,15 @@ import { ProfileProvider } from './Admin/ProfileContext';
 import 'bootstrap/dist/css/bootstrap.min.css';
 
 // Import components
-import Header from "./Components/Header/Header";
 import Home from './Pages/Home';
 import About from './Pages/About';
 import AdminPanel from './Admin/AdminPanel';
-import Panchaloga from './Pages/Panchaloga';
-import Rudraksha from './Pages/Rudraksha';
-import Karungali from './Pages/Karungali';
-import Statues from './Pages/Statues';
-import PureSilver from './Pages/PureSilver';
-import Maalai from './Pages/Maalai';
+
 import Login from './Admin/Login';
 import Checkout from './Pages/Checkout'; // Import the new Checkout component
 import OrderConfirmation from './Pages/OrderConfirmation';
-import Blog from './Pages/Blog';
 import Contact from './Pages/Contact';
+import Products from './Pages/Products';
 
 function AppContent() {
   const location = useLocation();
@@ -34,14 +28,8 @@ function AppContent() {
           <Route path="/" element={<Home />} />
           <Route path="/Login" element={<Login />} />
           <Route path="/about" element={<About />} />
-          <Route path="/panjaloga" element={<Panchaloga />} />
-          <Route path="/rudh" element={<Rudraksha />} />
-          <Route path="/karungali" element={<Karungali />} />
-          <Route path="/statues" element={<Statues />} />
-          <Route path="/puresilver" element={<PureSilver />} />
-          <Route path="/maalai" element={<Maalai />} />
+          <Route path="/groundnut" element={<Products />} />
           <Route path="/admin" element={<AdminPanel />} />
-          <Route path="/blog" element={<Blog />} />
           <Route path="/contact" element={<Contact />} />
          
           <Route path="/checkout" element={<Checkout />} /> {/* Add the new Checkout route */}

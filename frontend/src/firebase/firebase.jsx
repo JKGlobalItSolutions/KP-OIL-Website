@@ -27,13 +27,14 @@ import {
 } from 'firebase/auth';
 
 const firebaseConfig = {
-  apiKey: "AIzaSyAVP5xuThSQeQqai17M3uZCbeUKa7yBYhg",
-  authDomain: "rettaipillayarpoojastore-c171a.firebaseapp.com",
-  projectId: "rettaipillayarpoojastore-c171a",
-  storageBucket: "rettaipillayarpoojastore-c171a.firebasestorage.app",
-  messagingSenderId: "754329199351",
-  appId: "1:754329199351:web:b8c77671266ab333dc29f2",
-  measurementId: "G-KQTQVQLW02" 
+  apiKey: "AIzaSyCh-Dq07x2LhQQckEE-QCf7RPKlqs4DV6w",
+  authDomain: "fir-login-9c872.firebaseapp.com",
+  databaseURL: "https://fir-login-9c872-default-rtdb.firebaseio.com",
+  projectId: "fir-login-9c872",
+  storageBucket: "fir-login-9c872.appspot.com",
+  messagingSenderId: "411249060600",
+  appId: "1:411249060600:web:3d5007178a5a446ddb290d",
+  measurementId: "G-94BJ0XSHDS"
 };
 
 const app = initializeApp(firebaseConfig);

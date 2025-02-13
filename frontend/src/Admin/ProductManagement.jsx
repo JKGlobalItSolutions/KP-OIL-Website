@@ -213,12 +213,8 @@ const ProductManagement = () => {
 
   const pages = [
     "Home",
-    "Panjaloga",
-    "Rudraksha",
-    "Karungali",
-    "Statues",
-    "Pure Silver",
-    "Maalai",
+    "Products",
+   
   ];
 
   useEffect(() => {

@@ -8,8 +8,7 @@ import { auth } from '../firebase/firebase';
 import logo from "../Images/Logo/Rettai Pillayar logo.png";
 
 const StyledSidebar = styled.div`
-  background-color: rgb(163, 29, 24);
-  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15);
+  background-color: #00308F;
   padding: 2rem;
   height: 100%;
   min-height: 100vh;

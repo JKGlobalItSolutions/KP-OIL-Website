@@ -1,15 +1,17 @@
-import React, { useState, useEffect } from 'react';
-import { Navbar, Nav, Container, Form, Button, InputGroup, Row, Col } from 'react-bootstrap';
-import { FaShoppingCart, FaHeart, FaSearch, FaChevronDown } from 'react-icons/fa';
-import styled from 'styled-components';
-import logo from '../../Images/Logo/Frame 11 (1).png';
-import { collection, getDocs, query, where } from 'firebase/firestore';
-import { db } from '../../firebase/firebase';
+"use client"
+
+import { useState, useEffect } from "react"
+import { Navbar, Nav, Container, Form, Button, InputGroup, Row, Col } from "react-bootstrap"
+import { FaSearch, FaChevronRight } from "react-icons/fa"
+import styled from "styled-components"
+import logo from "../../Images/Logo/Frame 11 (1).png"
+import { collection, getDocs } from "firebase/firestore"
+import { db } from "../../firebase/firebase"
 
 const StyledHeader = styled.header`
   .welcome-banner {
-    background-color: #FFF5E6;
-    color: #8B4513;
+    background-color: #000000;
+    color: white;
     font-size: 0.8rem;
     padding: 0.5rem 0;
     @media (min-width: 768px) {
@@ -28,7 +30,7 @@ const StyledHeader = styled.header`
   }
 
   .store-name {
-    color: #FF0000;
+    color: #000000;
     font-size: 1rem;
     font-weight: 700;
     margin-bottom: 0;
@@ -41,7 +43,7 @@ const StyledHeader = styled.header`
   }
 
   .store-subname {
-    color: #000080;
+    color: #000000;
     font-size: 0.8rem;
     margin-bottom: 0;
     @media (min-width: 768px) {
@@ -53,27 +55,28 @@ const StyledHeader = styled.header`
   }
 
   .custom-navbar {
-    background-color: #B22222;
+    background-color: white;
   }
 
   .nav-link, .nav-item {
     font-size: 0.9rem;
     font-weight: 500;
     transition: color 0.3s ease;
-    color: white !important;
+    color: black !important;
     display: flex;
     align-items: center;
-    justify-content: center;
+    justify-content: space-between;
     height: 100%;
     padding: 0.5rem 1rem !important;
     
     @media (min-width: 992px) {
       font-size: 1rem;
       padding: 0.75rem 1.5rem !important;
+      justify-content: center;
     }
     
     &:hover, &:focus, &.active {
-      color: #F4D35E !important;
+      color: #808080 !important;
       background-color: transparent;
     }
   }
@@ -81,8 +84,8 @@ const StyledHeader = styled.header`
   .dropdown-menu {
     margin-top: 0;
     border: none;
-    border-radius: 8px;
-    background-color: #B22222;
+    border-radius: 0;
+    background-color: #FFFFFF;
     padding: 0;
     min-width: 200px;
     
@@ -108,20 +111,23 @@ const StyledHeader = styled.header`
       transform: translateX(-50%);
       z-index: 1000;
       display: none;
+      border-radius: 8px;
     }
   }
 
   .dropdown-item {
-    color: white;
+    color: #666;
     font-size: 0.9rem;
-    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
-    font-family: 'Lora', serif;
-    text-align: left;
-    padding: 0.5rem 1rem;
+    border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+    padding: 0.75rem 1rem;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
     
     @media (min-width: 992px) {
       font-size: 1rem;
       text-align: center;
+      justify-content: center;
     }
     
     &:last-child {
@@ -130,7 +136,7 @@ const StyledHeader = styled.header`
 
     &:hover, &:focus, &.active {
       background-color: transparent;
-      color: #F4D35E;
+      color: #808080;
     }
   }
 
@@ -142,7 +148,7 @@ const StyledHeader = styled.header`
 
   .mobile-action-icon {
     font-size: 1.2rem;
-    color: white;
+    color: black;
   }
 
   .mobile-sign-in {
@@ -152,7 +158,7 @@ const StyledHeader = styled.header`
 
   .desktop-heart-icon {
     @media (min-width: 992px) {
-      color: #FF0000 !important;
+      color: #000000 !important;
     }
   }
 
@@ -186,16 +192,48 @@ const StyledHeader = styled.header`
 
   @media (max-width: 991px) {
     .nav-link {
-      padding: 0.5rem 1rem !important;
-      justify-content: flex-start;
+      padding: 0.875rem 1rem !important;
+      border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+      color: #333 !important;
+      font-weight: 400;
     }
 
     .dropdown-menu {
-      padding-left: 1rem;
+      padding-left: 0;
+      background-color: #f8f9fa;
+      
+      &.show {
+        display: block;
+      }
     }
 
     .dropdown-item {
-      padding: 0.5rem 0;
+      padding: 0.875rem 1rem;
+      border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+      color: #666;
+      font-weight: 400;
+      
+      &:last-child {
+        border-bottom: none;
+      }
+    }
+
+    .chevron-icon {
+      color: #666;
+      font-size: 1rem;
+    }
+
+    .navbar-collapse {
+      max-height: calc(100vh - 100px);
+      overflow-y: auto;
+    }
+
+    .navbar-toggler {
+      border: none;
+      padding: 0;
+      &:focus {
+        box-shadow: none;
+      }
     }
   }
 
@@ -215,7 +253,7 @@ const StyledHeader = styled.header`
     position: absolute;
     top: -8px;
     right: -8px;
-    background-color: #FF0000;
+    background-color: #000000;
     color: white;
     border-radius: 50%;
     font-size: 0.7rem;
@@ -233,111 +271,172 @@ const StyledHeader = styled.header`
   }
 
   .search-input {
-    border-color: #B22222 !important;
+    border-color: #000000 !important;
     border-width: 2px !important;
     &:focus {
-      box-shadow: 0 0 0 0.2rem rgba(178, 34, 34, 0.25) !important;
+      box-shadow: 0 0 0 0.2rem rgba(0, 0, 0, 0.25) !important;
     }
   }
 
   .search-button {
-    background-color: #B22222 !important;
-    border-color: #B22222 !important;
+    background-color: #000000 !important;
+    border-color: #000000 !important;
     &:hover, &:focus {
-      background-color: #8B0000 !important;
-      border-color: #8B0000 !important;
+      background-color: #808080 !important;
+      border-color: #808080 !important;
     }
   }
-`;
+
+  .search-dropdown {
+    position: absolute;
+    top: 100%;
+    right: 0;
+    width: 300px;
+    background-color: white;
+    border: 1px solid #000000;
+    border-radius: 4px;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+    z-index: 1000;
+    display: none;
+    
+    &.show {
+      display: block;
+    }
+  }
+
+  .search-icon {
+    cursor: pointer;
+    font-size: 1.2rem;
+    color: #000000;
+  }
+
+  .mobile-menu-item {
+    @media (max-width: 991px) {
+      border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+      margin: 0;
+      
+      &:last-child {
+        border-bottom: none;
+      }
+    }
+  }
+
+  .submenu-item {
+    @media (max-width: 991px) {
+      padding-left: 1.5rem;
+      background-color: #f8f9fa;
+    }
+  }
+`
 
 const Header = ({ onSearch }) => {
-  const [searchTerm, setSearchTerm] = useState('');
-  const [isProductsOpen, setIsProductsOpen] = useState(false);
-  const [filteredProducts, setFilteredProducts] = useState([]);
+  const [searchTerm, setSearchTerm] = useState("")
+  const [activeSubmenu, setActiveSubmenu] = useState(null)
+  const [isSearchOpen, setIsSearchOpen] = useState(false)
+  const [filteredProducts, setFilteredProducts] = useState([])
+
+  // Define navigation structure
+  const navigation = {
+    HOME: { path: "/" },
+    "ABOUT US": { path: "/about" },
+    SHOP: {
+      items: {
+        "Groundnut Oil": "/groundnut",
+        
+      }
+    },
+    "CONTACT US": { path: "/contact" }
+  }
+
+  const toggleSubmenu = (menuName) => {
+    setActiveSubmenu(activeSubmenu === menuName ? null : menuName)
+  }
 
   useEffect(() => {
     const fetchProducts = async () => {
       try {
-        const productsCollection = collection(db, 'products');
-        const productsSnapshot = await getDocs(productsCollection);
-        const productsList = productsSnapshot.docs.map(doc => ({
+        const productsCollection = collection(db, "products")
+        const productsSnapshot = await getDocs(productsCollection)
+        const productsList = productsSnapshot.docs.map((doc) => ({
           id: doc.id,
-          ...doc.data()
-        }));
-        setFilteredProducts(productsList);
+          ...doc.data(),
+        }))
+        setFilteredProducts(productsList)
       } catch (error) {
-        console.error('Error fetching products:', error);
+        console.error("Error fetching products:", error)
       }
-    };
+    }
 
-    fetchProducts();
-  }, []);
+    fetchProducts()
+  }, [])
 
   const handleSearch = (e) => {
-    e.preventDefault();
-    onSearch(searchTerm);
-  };
+    e.preventDefault()
+    onSearch(searchTerm)
+    setIsSearchOpen(false)
+  }
 
-  const toggleProductsDropdown = (e) => {
-    e.preventDefault();
-    setIsProductsOpen(!isProductsOpen);
-  };
+  const toggleSearch = () => {
+    setIsSearchOpen(!isSearchOpen)
+  }
 
   return (
     <StyledHeader>
       <div className="welcome-banner text-center">
-        <small>Welcome to Shree Rettai Pillaiyar</small>
+        <small>Welcome to KP Oil Extraction Company</small>
       </div>
 
       <Navbar bg="white" expand="lg" className="py-3 border-bottom">
         <Container fluid>
           <Row className="w-100 align-items-center g-3">
             <Col xs={12} lg={3} className="text-center text-lg-start">
-              <Navbar.Brand href="/" className="d-flex align-items-center justify-content-center justify-content-lg-start">
-             <div className="">
-             <img
-                  src={logo}
-                  alt="Shree Rettai Pillaiyar Logo"
-                  className="d-inline-block me-2 logo-image"
-                />
-             </div>
-              
+              <Navbar.Brand
+                href="/"
+                className="d-flex align-items-center justify-content-center justify-content-lg-start"
+              >
+                <div className="">
+                  <img
+                    src={logo || "/placeholder.svg"}
+                    alt="Shree Rettai Pillaiyar Logo"
+                    className="d-inline-block me-2 logo-image"
+                  />
+                </div>
               </Navbar.Brand>
-              
             </Col>
 
-            <Col xs={12} lg={6}>
-              <Form onSubmit={handleSearch} className="px-2">
-                <InputGroup className='ms-0 ms-lg-5' >
-                  <Form.Control
-                    type="search"
-                    placeholder="Search Products & Categories"
-                    className="search-input rounded-start-pill"
-                    value={searchTerm}
-                    onChange={(e) => {
-                      setSearchTerm(e.target.value);
-                      onSearch(e.target.value);
-                    }}
-                  />
-                  <Button 
-                    variant="danger" 
-                    type="submit"
-                    className="search-button rounded-end-pill"
-                  >
-                    <FaSearch />
-                  </Button>
-                </InputGroup>
-              </Form>
+            <Col xs={12} lg={6} className="d-flex justify-content-end align-items-center">
+              <div className="position-relative">
+                <FaSearch className="search-icon" onClick={toggleSearch} />
+                <div className={`search-dropdown ${isSearchOpen ? "show" : ""}`}>
+                  <Form onSubmit={handleSearch} className="p-2">
+                    <InputGroup>
+                      <Form.Control
+                        type="search"
+                        placeholder="Search Products & Categories"
+                        className="search-input"
+                        value={searchTerm}
+                        onChange={(e) => {
+                          setSearchTerm(e.target.value)
+                          onSearch(e.target.value)
+                        }}
+                      />
+                      <Button variant="dark" type="submit" className="search-button">
+                        <FaSearch />
+                      </Button>
+                    </InputGroup>
+                  </Form>
+                </div>
+              </div>
             </Col>
 
             <Col xs={12} lg={3} className="d-none d-lg-block">
               <div className="d-flex align-items-center justify-content-end gap-4">
-                <Button 
-                  variant="danger" 
-                  href='/login'
-                  target='_blank'
+                <Button
+                  variant="dark"
+                  href="/login"
+                  target="_blank"
                   className="rounded-pill px-4"
-                  style={{ backgroundColor: '#B22222' }}
+                  style={{ backgroundColor: "#000000" }}
                 >
                   SIGN IN
                 </Button>
@@ -350,17 +449,14 @@ const Header = ({ onSearch }) => {
       <Navbar expand="lg" className="py-0 custom-navbar">
         <Container fluid className="px-2">
           <div className="d-flex d-lg-none align-items-center w-100 py-2">
-            <Navbar.Toggle 
-              aria-controls="basic-navbar-nav-2" 
-              className="border-0 text-white"
-            />
+            <Navbar.Toggle aria-controls="basic-navbar-nav-2" className="border-0 text-black" />
             <div className="mobile-actions ms-auto">
-              <Button 
-                variant="outline-light" 
+              <Button
+                variant="outline-dark"
                 size="sm"
-                className="rounded-pill bg-light text-danger mobile-sign-in"
-                href='/login'
-                target='_blank'
+                className="rounded-pill bg-white text-black mobile-sign-in"
+                href="/login"
+                target="_blank"
               >
                 Sign In
               </Button>
@@ -369,42 +465,41 @@ const Header = ({ onSearch }) => {
 
           <Navbar.Collapse id="basic-navbar-nav-2">
             <Nav className="flex-column flex-lg-row justify-content-around w-100">
-              <Nav.Item>
-                <Nav.Link href="/">HOME</Nav.Link>
-              </Nav.Item>
-              <Nav.Item>
-                <Nav.Link href="/about">ABOUT US</Nav.Link>
-              </Nav.Item>
-              <Nav.Item className="dropdown">
-                <Nav.Link
-                  href="#"
-                  onClick={toggleProductsDropdown}
-                  className="d-flex justify-content-between align-items-center"
-                >
-                  PRODUCTS
-                  <FaChevronDown className={`dropdown-icon ${isProductsOpen ? 'show' : ''}`} />
-                </Nav.Link>
-                <div className={`dropdown-menu ${isProductsOpen ? 'show' : ''}`}>
-                  <Nav.Link href="/panjaloga" className="dropdown-item">Panjaloga</Nav.Link>
-                  <Nav.Link href="/rudh" className="dropdown-item">Rudraksha</Nav.Link>
-                  <Nav.Link href="/karungali" className="dropdown-item">Karungali</Nav.Link>
-                  <Nav.Link href="/statues" className="dropdown-item">Statues</Nav.Link>
-                  <Nav.Link href="/puresilver" className="dropdown-item">Pure Silver</Nav.Link>
-                  <Nav.Link href="/maalai" className="dropdown-item">Malai</Nav.Link>
-                </div>
-              </Nav.Item>
-              <Nav.Item>
-                <Nav.Link href="/blog">BLOG</Nav.Link>
-              </Nav.Item>
-              <Nav.Item>
-                <Nav.Link href="/contact">CONTACT US</Nav.Link>
-              </Nav.Item>
+              {Object.entries(navigation).map(([name, details]) => (
+                <Nav.Item key={name} className={`mobile-menu-item ${details.items ? "dropdown" : ""}`}>
+                  {details.items ? (
+                    <>
+                      <Nav.Link
+                        href="#"
+                        onClick={() => toggleSubmenu(name)}
+                        className="d-flex justify-content-between align-items-center"
+                      >
+                        {name}
+                        <FaChevronRight className="chevron-icon d-lg-none" />
+                      </Nav.Link>
+                      <div className={`dropdown-menu ${activeSubmenu === name ? "show" : ""}`}>
+                        {Object.entries(details.items).map(([itemName, path]) => (
+                          <Nav.Link key={itemName} href={path} className="dropdown-item submenu-item">
+                            {itemName}
+                            <FaChevronRight className="chevron-icon d-lg-none" />
+                          </Nav.Link>
+                        ))}
+                      </div>
+                    </>
+                  ) : (
+                    <Nav.Link href={details.path} className="d-flex justify-content-between align-items-center">
+                      {name}
+                      <FaChevronRight className="chevron-icon d-lg-none" />
+                    </Nav.Link>
+                  )}
+                </Nav.Item>
+              ))}
             </Nav>
           </Navbar.Collapse>
         </Container>
       </Navbar>
     </StyledHeader>
-  );
-};
+  )
+}
 
-export default Header;
+export default Header

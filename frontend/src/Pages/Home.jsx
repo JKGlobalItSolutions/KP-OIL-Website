@@ -755,9 +755,9 @@ const Home = () => {
       <Container fluid className="px-0">
         <BannerSlider className="banner animate-on-scroll">
           <div className="slides" style={{ transform: `translateX(-${currentSlide * 100}%)` }}>
-            <img className='img-fluid' src={Banner1} alt="Banner 1" />
-            <img className='img-fluid' src={Banner2} alt="Banner 2" />
-            <img className='img-fluid' src={Banner3} alt="Banner 3" />
+            <img className='img-fluid' src={Banner2} alt="Banner 1" />
+            <img className='img-fluid' src={Banner1} alt="Banner 2" />
+            <img className='img-fluid' src={Banner1} alt="Banner 3" />
           </div>
           <button className="nav-button prev" onClick={prevSlide}>
             <ChevronLeft size={24} />
@@ -768,83 +768,11 @@ const Home = () => {
         </BannerSlider>
       </Container>
 
-      <Container fluid className="my-3 animate-on-scroll px-0">
-        <h3 style={{fontFamily:"lora"}} className='text-center my-4 fw-bolder'>Shop By Category Items</h3>
-        <Row className='justify-content-center mx-0'>
-          <Col xs={12} sm={6} md={4} lg={2} className="mb-3">
-            <Link to="/panjaloga" >
-              <img className='img-fluid w-100' src={Panchalogam} alt="Panchalogam" />
-            </Link>
-          </Col>
-          <Col xs={12} sm={6} md={4} lg={2} className="mb-3">
-            <Link to="/rudh" >
-              <img className='img-fluid w-100' src={Rudhraksha} alt="Rudhraksha" />
-            </Link>
-          </Col>
-          <Col xs={12} sm={6} md={4} lg={2} className="mb-3">
-            <Link to="/karungali" >
-              <img className='img-fluid w-100' src={Karungali} alt="Karungali" />
-            </Link>
-          </Col>
-          <Col xs={12} sm={6} md={4} lg={2} className="mb-3">
-            <Link to="/statues" >
-              <img className='img-fluid w-100' src={Statues} alt="Statues" />
-            </Link>
-          </Col>
-          <Col xs={12} sm={6} md={4} lg={2} className="mb-3">
-            <Link to="/puresilver" >
-              <img className='img-fluid w-100' src={PureSilver} alt="Pure Silver" />
-            </Link>
-          </Col>
-          <Col xs={12} sm={6} md={4} lg={2} className="mb-3">
-            <Link to="/maalai" >
-              <img className='img-fluid w-100' src={Maalai} alt="Maalai" />
-            </Link>
-          </Col>
-        </Row>
-      </Container>
-      <Container fluid className="my-3 animate-on-scroll px-0">
-        <Row className='justify-content-center mx-0'>
-          {categories.map((category) => (
-            <Col xs={12} sm={6} md={4} lg={2} className="mb-3" key={category.id}>
-              <img className='img-fluid w-100' src={category.image} alt={category.name} />
-            </Col>
-          ))}
-        </Row>
-      </Container>
-      <Container fluid className="animate-on-scroll px-0">
-        <h3>Best Sellers</h3>
-        <Row>
-          {bestSellers.filter(product => 
-            product.name.toLowerCase().includes(searchTerm.toLowerCase())
-          ).map(renderProductCard)}
-        </Row>
-      </Container>
-      <Container fluid className="animate-on-scroll px-0">
-        <h3>New Products</h3>
-        <Row>
-          {newProducts.filter(product => 
-            product.name.toLowerCase().includes(searchTerm.toLowerCase())
-          ).map(renderProductCard)}
-        </Row>
-      </Container>
-      <Container fluid className="px-0 my-5 animate-on-scroll">
-        <img className='img-fluid w-100' src={HomeBanner2} alt="Home Banner 2" />
-      </Container>
-      <Container fluid className="my-5 animate-on-scroll px-0">
-        <h3>Our Blog</h3>
-        <Row className="align-items-center mx-0">
-          <Col xs={12} lg={4} className="my-2">
-            <img className='img-fluid w-100' src={Blog1} alt="Blog 1" />
-          </Col>
-          <Col xs={12} lg={4} className="my-2">
-            <img className='img-fluid w-100' src={Blog2} alt="Blog 2" />
-          </Col>
-          <Col xs={12} lg={4} className="my-2">
-            <img className='img-fluid w-100' src={Blog3} alt="Blog 3" />
-          </Col>
-        </Row>
-      </Container>
+     
+    
+      
+   
+     
 
       <StyledCartModal
         show={showCartModal}

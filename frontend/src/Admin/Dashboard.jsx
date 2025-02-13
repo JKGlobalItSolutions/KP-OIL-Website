@@ -9,7 +9,7 @@ const StyledDashboard = styled.div`
   padding: 2rem 0;
 
   h2 {
-    color: #A41E19;
+    color: #00308F;
     font-weight: bold;
     margin-bottom: 1.5rem;
   }
@@ -22,7 +22,7 @@ const StyledDashboard = styled.div`
   }
 
   .card-title {
-    color: #A41E19;
+    color: #00308F;
     font-weight: bold;
   }
 
@@ -106,7 +106,7 @@ const Dashboard = () => {
 
       // Prepare analytics data
       const analyticsData = [
-        { name: 'Products', value: productsCount, fill: '#A41E19' },
+        { name: 'Products', value: productsCount, fill: '#00308F' },
         { name: 'Categories', value: categoriesCount, fill: '#FFE31A' },
         { name: 'Orders', value: ordersCount, fill: 'black' }
       ];
