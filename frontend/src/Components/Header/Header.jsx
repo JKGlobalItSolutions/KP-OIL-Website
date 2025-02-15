@@ -73,6 +73,7 @@ const StyledHeader = styled.header`
       font-size: 1rem;
       padding: 0.75rem 1.5rem !important;
       justify-content: center;
+      white-space: nowrap; /* Prevent text wrapping */
     }
     
     &:hover, &:focus, &.active {

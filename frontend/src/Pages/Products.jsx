@@ -570,11 +570,7 @@ const Products = () => {
                     <div className="price">₹ {selectedProduct.price}</div>
                     <div className="mrp">M.R.P. {selectedProduct.originalPrice}</div>
                   </div>
-                  <div className={`size-option ${selectedProduct.size === "5L" ? "active" : ""}`}>
-                    <div>5 Litre</div>
-                    <div className="price">₹ 1748</div>
-                    <div className="mrp">M.R.P. 2800</div>
-                  </div>
+                 
                 </div>
                 <div className="quantity-selector">
                   <label>Quantity:</label>
