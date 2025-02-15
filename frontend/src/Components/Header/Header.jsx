@@ -1,10 +1,10 @@
 "use client"
 
-import { useState, useEffect } from "react"
+import React, { useState, useEffect } from "react"
 import { Navbar, Nav, Container, Form, Button, InputGroup, Row, Col } from "react-bootstrap"
-import { FaSearch, FaChevronRight } from "react-icons/fa"
+import { FaSearch, FaChevronRight, FaPlus } from "react-icons/fa"
 import styled from "styled-components"
-import logo from "../../Images/Logo/Frame 11 (1).png"
+import logo from "../../Images/Logo/Logo.jpg"
 import { collection, getDocs } from "firebase/firestore"
 import { db } from "../../firebase/firebase"
 
@@ -25,7 +25,7 @@ const StyledHeader = styled.header`
       height: 40px;
     }
     @media (min-width: 992px) {
-      height: 50px;
+      height: 70px;
     }
   }
 
@@ -327,6 +327,31 @@ const StyledHeader = styled.header`
       background-color: #f8f9fa;
     }
   }
+
+  .mobile-buttons {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    margin-left: auto;
+  }
+
+  .mobile-navbar-row {
+    display: flex;
+    align-items: center;
+    width: 100%;
+    justify-content: space-between;
+  }
+
+  .premium-arrow {
+    font-size: 1.2rem;
+    color: #000000;
+    margin-left: 0.5rem;
+    transition: transform 0.3s ease;
+  }
+
+  .dropdown.show .premium-arrow {
+    transform: rotate(180deg);
+  }
 `
 
 const Header = ({ onSearch }) => {
@@ -342,7 +367,6 @@ const Header = ({ onSearch }) => {
     SHOP: {
       items: {
         "Groundnut Oil": "/groundnut",
-        
       }
     },
     "CONTACT US": { path: "/contact" }
@@ -404,8 +428,57 @@ const Header = ({ onSearch }) => {
               </Navbar.Brand>
             </Col>
 
-            <Col xs={12} lg={6} className="d-flex justify-content-end align-items-center">
-              <div className="position-relative">
+            <Col xs={12} lg={6}>
+              <div className="mobile-navbar-row d-flex d-lg-none align-items-center">
+                <Navbar.Toggle aria-controls="basic-navbar-nav" className="border-0 text-black" />
+                <div className="mobile-buttons">
+                  <FaSearch className="search-icon" onClick={toggleSearch} />
+                  <Button
+                    variant="dark"
+                    href="/login"
+                    target="_blank"
+                    className="rounded-pill px-3"
+                    style={{ backgroundColor: "#000000" }}
+                  >
+                    SIGN IN
+                  </Button>
+                </div>
+              </div>
+              <Navbar.Collapse id="basic-navbar-nav">
+                <Nav className="justify-content-center">
+                  {Object.entries(navigation).map(([name, details]) => (
+                    <Nav.Item key={name} className={details.items ? "dropdown" : ""}>
+                      {details.items ? (
+                        <>
+                          <Nav.Link
+                            href="#"
+                            onClick={() => toggleSubmenu(name)}
+                            className="d-flex justify-content-between align-items-center"
+                          >
+                            {name}
+                            <FaPlus className="premium-arrow d-lg-none" />
+                          </Nav.Link>
+                          <div className={`dropdown-menu ${activeSubmenu === name ? "show" : ""}`}>
+                            {Object.entries(details.items).map(([itemName, path]) => (
+                              <Nav.Link key={itemName} href={path} className="dropdown-item submenu-item">
+                                {itemName}
+                              </Nav.Link>
+                            ))}
+                          </div>
+                        </>
+                      ) : (
+                        <Nav.Link href={details.path} className="d-flex justify-content-between align-items-center">
+                          {name}
+                        </Nav.Link>
+                      )}
+                    </Nav.Item>
+                  ))}
+                </Nav>
+              </Navbar.Collapse>
+            </Col>
+
+            <Col xs={12} lg={3} className="d-flex justify-content-end align-items-center d-none d-lg-flex">
+              <div className="position-relative me-3">
                 <FaSearch className="search-icon" onClick={toggleSearch} />
                 <div className={`search-dropdown ${isSearchOpen ? "show" : ""}`}>
                   <Form onSubmit={handleSearch} className="p-2">
@@ -427,75 +500,17 @@ const Header = ({ onSearch }) => {
                   </Form>
                 </div>
               </div>
-            </Col>
-
-            <Col xs={12} lg={3} className="d-none d-lg-block">
-              <div className="d-flex align-items-center justify-content-end gap-4">
-                <Button
-                  variant="dark"
-                  href="/login"
-                  target="_blank"
-                  className="rounded-pill px-4"
-                  style={{ backgroundColor: "#000000" }}
-                >
-                  SIGN IN
-                </Button>
-              </div>
-            </Col>
-          </Row>
-        </Container>
-      </Navbar>
-
-      <Navbar expand="lg" className="py-0 custom-navbar">
-        <Container fluid className="px-2">
-          <div className="d-flex d-lg-none align-items-center w-100 py-2">
-            <Navbar.Toggle aria-controls="basic-navbar-nav-2" className="border-0 text-black" />
-            <div className="mobile-actions ms-auto">
               <Button
-                variant="outline-dark"
-                size="sm"
-                className="rounded-pill bg-white text-black mobile-sign-in"
+                variant="dark"
                 href="/login"
                 target="_blank"
+                className="rounded-pill px-4"
+                style={{ backgroundColor: "#000000" }}
               >
-                Sign In
+                SIGN IN
               </Button>
-            </div>
-          </div>
-
-          <Navbar.Collapse id="basic-navbar-nav-2">
-            <Nav className="flex-column flex-lg-row justify-content-around w-100">
-              {Object.entries(navigation).map(([name, details]) => (
-                <Nav.Item key={name} className={`mobile-menu-item ${details.items ? "dropdown" : ""}`}>
-                  {details.items ? (
-                    <>
-                      <Nav.Link
-                        href="#"
-                        onClick={() => toggleSubmenu(name)}
-                        className="d-flex justify-content-between align-items-center"
-                      >
-                        {name}
-                        <FaChevronRight className="chevron-icon d-lg-none" />
-                      </Nav.Link>
-                      <div className={`dropdown-menu ${activeSubmenu === name ? "show" : ""}`}>
-                        {Object.entries(details.items).map(([itemName, path]) => (
-                          <Nav.Link key={itemName} href={path} className="dropdown-item submenu-item">
-                            {itemName}
-                            <FaChevronRight className="chevron-icon d-lg-none" />
-                          </Nav.Link>
-                        ))}
-                      </div>
-                    </>
-                  ) : (
-                    <Nav.Link href={details.path} className="d-flex justify-content-between align-items-center">
-                      {name}
-                      <FaChevronRight className="chevron-icon d-lg-none" />
-                    </Nav.Link>
-                  )}
-                </Nav.Item>
-              ))}
-            </Nav>
-          </Navbar.Collapse>
+            </Col>
+          </Row>
         </Container>
       </Navbar>
     </StyledHeader>

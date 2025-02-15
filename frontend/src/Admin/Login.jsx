@@ -11,10 +11,10 @@ const StyledLogin = styled.div`
   min-height: 100vh;
   display: flex;
   align-items: center;
-  background-color: #A41E19;
+  background-color: #00308F;
 
   h2 {
-    color: #A41E19;
+    color: #00308F;
     font-weight: bold;
     margin-bottom: 1.5rem;
   }
@@ -36,14 +36,14 @@ const StyledLogin = styled.div`
     transition: border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
 
     &:focus {
-      border-color: #A41E19;
+      border-color: #00308F;
       box-shadow: 0 0 0 0.2rem rgba(164, 30, 25, 0.25);
     }
   }
 
   .btn-primary {
-    background-color: #A41E19;
-    border-color: #A41E19;
+    background-color: #00308F;
+    border-color: #00308F;
     font-weight: bold;
     transition: background-color 0.15s ease-in-out, border-color 0.15s ease-in-out;
 
@@ -54,13 +54,13 @@ const StyledLogin = styled.div`
   }
 
   .btn-outline-secondary {
-    color: #A41E19;
+    color: #00308F;
     border-color: #ced4da;
 
     &:hover, &:focus {
       color: #fff;
-      background-color: #A41E19;
-      border-color: #A41E19;
+      background-color: #00308F;
+      border-color: #00308F;
     }
   }
 

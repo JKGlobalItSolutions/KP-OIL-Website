@@ -121,7 +121,7 @@ const Dashboard = () => {
   return (
     <StyledDashboard>
       <div>
-        <h2>Dashboard</h2>
+        <h2 style={{color:"#00308F"}} >Dashboard</h2>
         <Row>
           <Col xs={12} sm={6} md={4}>
             <Card>

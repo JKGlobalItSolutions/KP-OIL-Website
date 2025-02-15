@@ -13,7 +13,7 @@ const StyledNavbar = styled.nav`
   margin-bottom: 1rem;
 
   .menu-btn {
-    background: #A41E19;
+    background: #00308F;
     border: none;
     cursor: pointer;
     display: none;

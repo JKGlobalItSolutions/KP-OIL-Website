@@ -16,7 +16,7 @@ const StyledOrderConfirmation = styled.div`
     font-weight: bold;
     margin-bottom: 2rem;
     padding: 0.5rem 1rem;
-    background-color: #FFE31A;
+    background-color: black;
     display: inline-block;
     border-radius: 8px;
   }
@@ -48,11 +48,11 @@ const StyledOrderConfirmation = styled.div`
     padding: 1.5rem;
     border-radius: 10px;
     margin-bottom: 2rem;
-    border: 2px solid #A41E19;
+    border: 2px solid black;
   }
 
   .detail-title {
-    color: #A41E19;
+    color: black;
     font-size: 1.2rem;
     font-weight: bold;
     margin-bottom: 0.5rem;
@@ -63,9 +63,9 @@ const StyledOrderConfirmation = styled.div`
   }
 
   .btn-continue-shopping {
-    background-color: #FFE31A;
+    background-color: black;
     border: none;
-    color: #000;
+    color: white;
     font-weight: bold;
     padding: 0.75rem 2rem;
     font-size: 1.1rem;
@@ -116,7 +116,7 @@ const OrderConfirmation = () => {
       <StyledOrderConfirmation>
         <Container>
           <div className="text-center mb-4">
-            <h1 className="confirmation-title">Order Confirmation</h1>
+            <h1 className="confirmation-title text-light ">Order Confirmation</h1>
           </div>
           <div className="confirmation-card">
             <div className="text-center">

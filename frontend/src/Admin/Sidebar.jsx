@@ -5,7 +5,7 @@ import { Home, Box, Settings, X, LogOut, ShoppingBag } from 'lucide-react';
 import { useNavigate } from 'react-router-dom';
 import { signOut, onAuthStateChanged } from 'firebase/auth';
 import { auth } from '../firebase/firebase';
-import logo from "../Images/Logo/Rettai Pillayar logo.png";
+import logo from "../Images/Logo/Logo.jpg";
 
 const StyledSidebar = styled.div`
   background-color: #00308F;
@@ -126,12 +126,7 @@ const Sidebar = ({ activePage, setActivePage, isOpen, setIsOpen }) => {
           <X size={24} />
         </button>
         <div className="text-center">
-          <img
-            style={{ height: "100px" }}
-            className="img-fluid text-center"
-            src={logo}
-            alt="Rettai Pillayar logo"
-          />
+         <h6 className='text-light mb-5'>KP Oil Extraction Company</h6>
         </div>
         <div className="brand">
           <Settings size={24} />

@@ -2,7 +2,7 @@
 
 import React, { useState, useEffect, useRef } from "react"
 import { Container, Card, Button, Modal } from "react-bootstrap"
-import { X } from "lucide-react"
+import { X } from 'lucide-react'
 import { db } from "../firebase/firebase"
 import { collection, getDocs, query, where } from "firebase/firestore"
 import { useNavigate } from "react-router-dom"
@@ -66,15 +66,15 @@ const StyledPanjaloga = styled.div`
     color: #6c757d;
   }
 
-  .btn-danger {
-    background-color: black;
+  .btn-outline-dark {
+    background-color: transparent;
     border-color: black;
-    color: white;
-    transition: background-color 0.3s ease;
+    color: black;
+    transition: all 0.3s ease;
 
     &:hover {
-      background-color: #333;
-      border-color: #333;
+      background-color: black;
+      color: white;
     }
   }
 
@@ -320,6 +320,22 @@ const ZoomModal = styled(Modal)`
       color: black;
     }
   }
+
+  .add-to-cart-button {
+    background-color: black;
+    color: white;
+    border: none;
+    padding: 0.75rem 1.5rem;
+    font-size: 1rem;
+    font-weight: bold;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+
+    &:hover {
+      background-color: #333;
+    }
+  }
 `
 
 const Products = () => {
@@ -419,6 +435,14 @@ const Products = () => {
     }
   }
 
+  const handleCheckout = (product) => {
+    const productWithImage = {
+      ...product,
+      image: product.images && product.images.length > 0 ? product.images[0] : "/placeholder.svg"
+    };
+    navigate("/place-order", { state: { product: productWithImage, quantity } })
+  }
+
   const renderProductCard = (product) => {
     const currentImage = isHovered && product.images.length > 1 ? product.images[1] : product.images[0]
 
@@ -480,7 +504,7 @@ const Products = () => {
   return (
     <div>
       <Header onSearch={handleSearch} />
-     
+
       {showContent && (
         <StyledPanjaloga>
           <Container>
@@ -582,9 +606,10 @@ const Products = () => {
                     className="add-to-cart-button"
                     onClick={() => {
                       setShowZoomModal(false)
+                      handleCheckout(selectedProduct)
                     }}
                   >
-                    BUY NOW
+                    CHECKOUT
                   </button>
                 </div>
               </div>
@@ -602,4 +627,3 @@ const Products = () => {
 }
 
 export default Products
-

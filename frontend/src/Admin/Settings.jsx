@@ -97,7 +97,7 @@ export default function ShopSettings() {
       },
     },
     title: {
-      color: '#B22222',
+      color: '#00308F',
       textAlign: 'center',
       fontSize: '2.5rem',
       marginBottom: '2rem',
@@ -119,7 +119,7 @@ export default function ShopSettings() {
     profilePicture: {
       width: '150px',
       height: '150px',
-      border: '2px solid #B22222',
+      border: '2px solid #00308F',
       borderRadius: '50%',
       overflow: 'hidden',
       display: 'flex',
@@ -144,10 +144,10 @@ export default function ShopSettings() {
     profileIcon: {
       width: '60%',
       height: '60%',
-      color: '#B22222',
+      color: '#00308F',
     },
     uploadLabel: {
-      color: '#B22222',
+      color: '#00308F',
       cursor: 'pointer',
       display: 'flex',
       alignItems: 'center',
@@ -159,7 +159,7 @@ export default function ShopSettings() {
     button: {
       width: '100%',
       padding: '0.75rem',
-      backgroundColor: '#B22222',
+      backgroundColor: '#00308F',
       color: 'white',
       border: 'none',
       borderRadius: '4px',
@@ -182,14 +182,14 @@ export default function ShopSettings() {
 
   return (
     <div className="col-12" style={{
-      border: window.innerWidth > 1024 ? "2px solid #A41E19" : "none",
+      border: window.innerWidth > 1024 ? "2px solid #00308F" : "none",
       padding: window.innerWidth <= 1024 ? '0.5rem' : '2rem',
       borderRadius: window.innerWidth > 1024 ? '8px' : '0',
     }}>
       <div className="row">
         <div className="col-12">
           <h1 className='d-none d-lg-block ' style={styles.title}>Shop Settings</h1>
-          <h1 className='text-center d-lg-none ' style={{color:"#A41E19"}} >Shop Settings</h1>
+          <h1 className='text-center d-lg-none ' style={{color:"#00308F"}} >Shop Settings</h1>
         </div>
       </div>
       

@@ -11,7 +11,7 @@ const StyledOrders = styled.div`
  
 
   .orders-title {
-    color: #A41E19;
+    color: #00308F;
     font-size: 2rem;
     font-weight: bold;
     margin-bottom: 2rem;
@@ -24,7 +24,7 @@ const StyledOrders = styled.div`
   }
 
   .table th {
-    background-color: #A41E19;
+    background-color: #00308F;
     color: white;
     font-weight: bold;
     min-width: 301px;

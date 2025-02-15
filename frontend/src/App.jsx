@@ -16,6 +16,7 @@ import Checkout from './Pages/Checkout'; // Import the new Checkout component
 import OrderConfirmation from './Pages/OrderConfirmation';
 import Contact from './Pages/Contact';
 import Products from './Pages/Products';
+import PlaceOrderConfirmation from './Pages/PlaceOrder';
 
 function AppContent() {
   const location = useLocation();
@@ -34,6 +35,7 @@ function AppContent() {
          
           <Route path="/checkout" element={<Checkout />} /> {/* Add the new Checkout route */}
           <Route path="/order-confirmation" element={<OrderConfirmation />} /> {/* Add the new Checkout route */}
+          <Route path="/place-order" element={<PlaceOrderConfirmation />} /> {/* Add the new Checkout route */}
           {/* Add other routes here */}
         </Routes>
       </div>
