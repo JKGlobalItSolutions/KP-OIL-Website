@@ -2,7 +2,7 @@
 
 import React, { useState, useEffect, useRef } from "react"
 import { Container, Card, Button, Modal } from "react-bootstrap"
-import { X } from 'lucide-react'
+import { X } from "lucide-react"
 import { db } from "../firebase/firebase"
 import { collection, getDocs, query, where } from "firebase/firestore"
 import { useNavigate } from "react-router-dom"
@@ -351,8 +351,8 @@ const Products = () => {
   const [currentImageIndex, setCurrentImageIndex] = useState({})
   const [searchTerm, setSearchTerm] = useState("")
   const [zoomedProductIndex, setZoomedProductIndex] = useState(0)
-  const [quantity, setQuantity] = useState(1)
-  const [isHovered, setIsHovered] = useState(false)
+  const [quantities, setQuantities] = useState({})
+  const [hoveredProducts, setHoveredProducts] = useState({})
 
   useEffect(() => {
     fetchProducts()
@@ -388,10 +388,13 @@ const Products = () => {
         setFilteredProducts(productsList)
 
         const initialImageIndices = {}
+        const initialQuantities = {}
         productsList.forEach((product) => {
           initialImageIndices[product.id] = 0
+          initialQuantities[product.id] = 1
         })
         setCurrentImageIndex(initialImageIndices)
+        setQuantities(initialQuantities)
       } else {
         setShowContent(false)
       }
@@ -428,31 +431,32 @@ const Products = () => {
     setSearchTerm(term)
   }
 
-  const handleQuantityChange = (change) => {
-    const newQuantity = quantity + change
-    if (newQuantity >= 1) {
-      setQuantity(newQuantity)
-    }
+  const handleQuantityChange = (productId, change) => {
+    setQuantities((prevQuantities) => ({
+      ...prevQuantities,
+      [productId]: Math.max(1, prevQuantities[productId] + change),
+    }))
   }
 
   const handleCheckout = (product) => {
     const productWithImage = {
       ...product,
-      image: product.images && product.images.length > 0 ? product.images[0] : "/placeholder.svg"
-    };
-    navigate("/place-order", { state: { product: productWithImage, quantity } })
+      image: product.images && product.images.length > 0 ? product.images[0] : "/placeholder.svg",
+    }
+    navigate("/place-order", { state: { product: productWithImage, quantity: quantities[product.id] } })
   }
 
   const renderProductCard = (product) => {
-    const currentImage = isHovered && product.images.length > 1 ? product.images[1] : product.images[0]
+    const currentImage =
+      hoveredProducts[product.id] && product.images.length > 1 ? product.images[1] : product.images[0]
 
     return (
       <div key={product.id} className="flex-shrink-0 mb-4">
         <Card
           className="h-100 border-0 shadow-sm"
           style={{ width: "250px" }}
-          onMouseEnter={() => setIsHovered(true)}
-          onMouseLeave={() => setIsHovered(false)}
+          onMouseEnter={() => setHoveredProducts((prev) => ({ ...prev, [product.id]: true }))}
+          onMouseLeave={() => setHoveredProducts((prev) => ({ ...prev, [product.id]: false }))}
         >
           <div className="position-relative">
             <div
@@ -481,11 +485,11 @@ const Products = () => {
             </div>
 
             <div className="d-flex align-items-center gap-2 mb-3">
-              <Button variant="outline-secondary" size="sm" onClick={() => handleQuantityChange(-1)}>
+              <Button variant="outline-secondary" size="sm" onClick={() => handleQuantityChange(product.id, -1)}>
                 -
               </Button>
-              <span className="px-3 py-1 border rounded">{quantity}</span>
-              <Button variant="outline-secondary" size="sm" onClick={() => handleQuantityChange(1)}>
+              <span className="px-3 py-1 border rounded">{quantities[product.id]}</span>
+              <Button variant="outline-secondary" size="sm" onClick={() => handleQuantityChange(product.id, 1)}>
                 +
               </Button>
             </div>
@@ -570,34 +574,26 @@ const Products = () => {
                     <div className="price">₹ {selectedProduct.price}</div>
                     <div className="mrp">M.R.P. {selectedProduct.originalPrice}</div>
                   </div>
-                 
                 </div>
                 <div className="quantity-selector">
                   <label>Quantity:</label>
                   <div className="quantity-controls">
-                    <button
-                      onClick={() => {
-                        handleQuantityChange(-1)
-                      }}
-                    >
-                      -
-                    </button>
+                    <button onClick={() => handleQuantityChange(selectedProduct.id, -1)}>-</button>
                     <input
                       type="number"
-                      value={quantity}
-                      onChange={(e) => setQuantity(Number.parseInt(e.target.value, 10))}
+                      value={quantities[selectedProduct.id]}
+                      onChange={(e) =>
+                        handleQuantityChange(
+                          selectedProduct.id,
+                          Number.parseInt(e.target.value) - quantities[selectedProduct.id],
+                        )
+                      }
                     />
-                    <button
-                      onClick={() => {
-                        handleQuantityChange(1)
-                      }}
-                    >
-                      +
-                    </button>
+                    <button onClick={() => handleQuantityChange(selectedProduct.id, 1)}>+</button>
                   </div>
                 </div>
                 <div className="total-section">
-                  <div className="total-amount">Total : ₹ {selectedProduct.price * quantity}</div>
+                  <div className="total-amount">Total : ₹ {selectedProduct.price * quantities[selectedProduct.id]}</div>
                   <button
                     className="add-to-cart-button"
                     onClick={() => {
@@ -623,3 +619,4 @@ const Products = () => {
 }
 
 export default Products
+
